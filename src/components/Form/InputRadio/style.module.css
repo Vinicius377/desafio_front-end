@@ -1,0 +1,36 @@
+.input__radio {
+  margin-block: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  border: solid 0.6px black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.input__radio input {
+  display: none;
+}
+
+.input__radio label input:checked button {
+  background-color: var(--orange-color);
+  border-inline: solid 2px black;
+  color: white;
+}
+.input__radio label {
+  width: 100%;
+}
+.input__radio button {
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  padding-block: 12px;
+}
+.input__radio button:hover {
+  backdrop-filter: brightness(0.93);
+}
+
+.input__radio--active button {
+  background-color: #ed8e53;
+  border-inline: solid 2px black;
+  color: white;
+}

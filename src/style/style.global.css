@@ -1,0 +1,19 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  padding: 30px;
+}
+.App {
+  background-color: #efefef;
+}
+main {
+  gap: 10px;
+  display: flex;
+  padding: 20px;
+}
+header {
+  text-align: center;
+}

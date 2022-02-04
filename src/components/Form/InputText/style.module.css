@@ -1,0 +1,28 @@
+.input__text {
+  margin-block: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.input__text input {
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: solid 0.5px black;
+  padding-block: 8px;
+  font-size: 1em;
+}
+.input__text input:focus {
+  border-bottom: solid 0.5px #0f74e7;
+}
+
+/*
+Input error
+*/
+.input__text--error input {
+  border-bottom: solid 0.5px #ff3737;
+}
+.input__text--error {
+  color: #ff3737;
+}
