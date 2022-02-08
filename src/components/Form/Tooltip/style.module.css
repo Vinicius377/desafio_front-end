@@ -1,0 +1,15 @@
+.container {
+  background-color: white;
+  position: absolute;
+  padding: 7px;
+  font-size: 1em;
+  border-radius: 0 4px 4px 4px;
+  top: 20px;
+  box-shadow: 0 0 3px 1.5px rgba(0, 0, 0, 0.6);
+  transform: translateX(10%);
+  display: none;
+  width: 90%;
+  z-index: 100;
+  white-space: break-spaces;
+  line-height: 15px;
+}

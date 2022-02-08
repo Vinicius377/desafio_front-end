@@ -1,8 +1,9 @@
 .input__text {
-  margin-block: 30px;
+  margin-block: 15px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  white-space: nowrap;
 }
 .input__text input {
   width: 100%;
@@ -13,8 +14,12 @@
   padding-block: 8px;
   font-size: 1em;
 }
+
 .input__text input:focus {
   border-bottom: solid 0.5px #0f74e7;
+}
+.input__text span {
+  visibility: hidden;
 }
 
 /*
@@ -23,6 +28,27 @@ Input error
 .input__text--error input {
   border-bottom: solid 0.5px #ff3737;
 }
+.input__text--error input:focus {
+  border-bottom: solid 0.5px #ff3737;
+}
 .input__text--error {
   color: #ff3737;
+}
+
+.input__text--error span {
+  visibility: visible;
+}
+
+/* 
+   Media queries
+*/
+@media (max-width: 1115px) {
+  .input__text {
+    font-size: 0.9em;
+  }
+}
+@media (max-width: 900px) {
+  .input__text {
+    font-size: 0.85em;
+  }
 }
