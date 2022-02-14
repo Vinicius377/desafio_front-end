@@ -1,4 +1,4 @@
-<h1 style="text-align:center;">Desafio front-end / eqi-investimentos</h1>
+<h1 align="center">Desafio front-end / eqi-investimentos</h1>
 
 ## Oque é este repositório?
 
