@@ -1,20 +1,19 @@
-import { useState } from "react";
-import api from "./services/api";
-
-import Form from "./components/Form";
-import Result from "./components/Result";
-import "./style/style.global.css";
+import { useState } from "react"
+import api from "./services/api"
+import Form from "./components/Form"
+import Result from "./components/Result"
+import "./style/style.global.css"
 
 function App() {
-  const [data, setData] = useState();
+  const [data, setData] = useState()
 
   const getDatas = (tipoIndexacao, tipoRendimento) => {
     api
       .get(
         `/simulacoes/?tipoIndexacao=${tipoIndexacao}&tipoRendimento=${tipoRendimento}`
       )
-      .then((result) => setData(result.data[0]));
-  };
+      .then(result => setData(result.data[0]))
+  }
 
   return (
     <div className="App">
@@ -23,10 +22,11 @@ function App() {
       </header>
       <main>
         <Form getDatas={getDatas} />
+
         <Result data={data} />
       </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

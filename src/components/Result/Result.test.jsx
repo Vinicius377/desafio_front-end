@@ -1,4 +1,5 @@
-import React from "react"
+import { render, screen } from "@testing-library/react"
+import "@testing-library/jest-dom"
 
 import Result from "."
 
@@ -40,15 +41,20 @@ const data = {
     },
   },
 }
-export default {
-  title: "Result",
-  component: Result,
-}
-
-const Template = args => <Result {...args} />
-
-export const Default = Template.bind({})
-
-Default.args = {
-  data: { data },
-}
+//Caso não tenha dados, não deve ser renderizado
+test("Caso não tenha dados, não deve ser renderizado", () => {
+  render(<Result />)
+  expect(screen.getByTestId("result")).toHaveTextContent("")
+})
+//Dever ser renderizado se existe algum dado de consulta
+test("Dever ser renderizado se existe algum dado de consulta", () => {
+  const { container } = render(<Result data={data} />)
+  const hasSpan = container.querySelector("span")
+  expect(hasSpan).not.toBeNull()
+})
+//Um canvas deve ser renderizado
+test("Um canvas deve ser renderizado", () => {
+  const { container } = render(<Result data={data} />)
+  const hasCanvas = container.querySelector("canvas")
+  expect(hasCanvas).not.toBeNull()
+})

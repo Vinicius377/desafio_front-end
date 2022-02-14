@@ -1,22 +1,19 @@
-import alert from "../../assets/error_outline_black_24dp.svg"
 import style from "./style.module.css"
-
+import propTypes from "prop-types"
 import React, { useState } from "react"
-
+import Tooltip from "./Tooltip"
 import InputRadio from "./InputRadio"
 import InputNumber from "./InputNumber"
-import Tooltip from "./Tooltip"
+import useEnsureInput from "../../hooks/useEnsureInput"
 
 function Form({ getDatas }) {
   const [clearFields, setClearFields] = useState(false)
   const [simulacoesIn, setSimulacoesIn] = useState({
-    tipoIndexacao: "",
-    tipoRendimento: "",
+    tipoIndexacao: "ipca",
+    tipoRendimento: "liquido",
   })
-  const [fieldsFilled, setFieldsFilled] = useState([])
-  const isAllDone = fieldsFilled.every(field => field)
+  const [isAllDone, setIsAllDone] = useEnsureInput()
 
-  console.log(fieldsFilled)
   const onSetRendimento = tipo =>
     setSimulacoesIn({ ...simulacoesIn, tipoRendimento: tipo })
   const onSetIndexacao = tipo =>
@@ -26,22 +23,10 @@ function Form({ getDatas }) {
     setClearFields(!clearFields)
   }
 
-  const setInputIsDone = done => {
-    setFieldsFilled(inputIsDone => {
-      if (done) {
-        const isFalse = inputIsDone.indexOf(false)
-
-        return [...inputIsDone, (inputIsDone[isFalse] = done)]
-      }
-      const isTrue = inputIsDone.indexOf(true)
-      return [...inputIsDone, (inputIsDone[isTrue] = done)]
-    })
-  }
-
   const onGetDatas = () => {
     getDatas(simulacoesIn.tipoIndexacao, simulacoesIn.tipoRendimento)
-    console.log(simulacoesIn)
   }
+
   return (
     <section className={style.section}>
       <h1>Simulador</h1>
@@ -50,81 +35,76 @@ function Form({ getDatas }) {
           <div className={style.form__item}>
             <div className={style.title}>
               <span>Rendimento</span>
-              <img src={alert} alt="alert" />
               <Tooltip>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                labore nobis sequi, debitis vel magni ipsa eos nesciunt sunt
-                quae et impedit recusandae voluptatibus modi ullam autem
-                incidunt eius deleniti.
+                Escolha qual o tipo de Rendimento deve ser consultado
               </Tooltip>
             </div>
             <InputRadio
               name="rendimento"
               buttons={["Bruto", "Liquido"]}
               onSetValue={onSetRendimento}
+              isDone={setIsAllDone}
             />
 
             <InputNumber
               name="Aporte inicial"
               format="real"
               clearField={clearFields}
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
             <InputNumber
               name="Prazo (em meses)"
               clearField={clearFields}
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
             <InputNumber
               name="IPCA"
-              format="porcentagem"
+              format="percentage"
               clearField={clearFields}
               autoComplete="ipca"
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
           </div>
           <div className={style.form__item}>
             <div className={style.title}>
               <span>Tipos de indexação</span>
-              <img src={alert} alt="alert" />
               <Tooltip>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                labore nobis sequi, debitis vel magni ipsa eos nesciunt sunt
-                quae et impedit recusandae voluptatibus modi ullam autem
-                incidunt eius deleniti.
+                Escolha qual o tipo de Indexação deve ser consultado
               </Tooltip>
             </div>
             <InputRadio
               name="tipos_de_indexação"
               buttons={["PRÉ", "POS", "FIXADO"]}
               onSetValue={onSetIndexacao}
+              isDone={setIsAllDone}
             />
 
             <InputNumber
               name="Aporte mensal"
               format="real"
               clearField={clearFields}
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
             <InputNumber
               name="Rentabilidade"
-              format="porcentagem"
+              format="percentage"
               clearField={clearFields}
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
             <InputNumber
-              name="CDI (ao ano )"
-              format="porcentagem"
+              name="CDI (ao ano)"
+              format="percentage"
               clearField={clearFields}
               autoComplete="cdi"
-              isDone={setInputIsDone}
+              isDone={setIsAllDone}
             />
           </div>
         </div>
-        <div className={style.buttons}>
+        <div className={style.buttons__container}>
           <button
             className={style.buttons__limparCampos}
             onClick={triggerClearFields}
+            data-testid="button_limpar"
           >
             Limpar campos
           </button>
@@ -134,6 +114,7 @@ function Form({ getDatas }) {
             }`}
             onClick={onGetDatas}
             disabled={!isAllDone}
+            data-testid="button_simular"
           >
             Simular
           </button>
@@ -143,4 +124,11 @@ function Form({ getDatas }) {
   )
 }
 
+Form.propTypes = {
+  /**
+   * Recebe em seu primeiro argumento qual o Tipo de Indexação
+   *  e em seu segundo argumento qual o Tipo de Rendimento
+   */
+  getDatas: propTypes.func,
+}
 export default Form

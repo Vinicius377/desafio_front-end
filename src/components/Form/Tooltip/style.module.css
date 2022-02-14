@@ -8,8 +8,16 @@
   box-shadow: 0 0 3px 1.5px rgba(0, 0, 0, 0.6);
   transform: translateX(10%);
   display: none;
+  text-align: justify;
   width: 90%;
   z-index: 100;
   white-space: break-spaces;
   line-height: 15px;
+}
+.info {
+  width: 20px;
+  cursor: help;
+}
+.info :hover + div {
+  display: block;
 }

@@ -9,12 +9,8 @@ export default {
 
 const Template = args => (
   <>
-    <Tooltip {...args} />
+    <Tooltip>Lorem ipsolum</Tooltip>
   </>
 )
 
 export const Default = Template.bind({})
-
-Default.args = {
-  children: "lorem Ipsolum",
-}

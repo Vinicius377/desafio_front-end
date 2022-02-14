@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import validateNumber from "../../../utils/validateNumber"
 import propTypes from "prop-types"
 import api from "../../../services/api"
 
 import style from "./style.module.css"
-function InputNumber({ name, format, clearField, autoComplete, isDone }) {
+
+function InputNumber({
+  name = "InputName",
+  format,
+  clearField,
+  autoComplete,
+  isDone,
+}) {
   const [inputNumber, setInputNumber] = useState("")
   const [hasError, setHasError] = useState(false)
-  const [errorInputName] = name.split(" ")
+  const [firstName] = name.split(" ")
 
   const filterInput = ({ target }) => {
     const formattedString = validateNumber(target.value, format)
@@ -16,9 +23,10 @@ function InputNumber({ name, format, clearField, autoComplete, isDone }) {
       setHasError(false)
     } else {
       setHasError(true)
-      setInputNumber(target.vlue)
+      setInputNumber(target.value)
     }
   }
+  console.log()
   // Limpar campos
   useEffect(() => {
     setInputNumber("")
@@ -33,22 +41,19 @@ function InputNumber({ name, format, clearField, autoComplete, isDone }) {
   }, [autoComplete])
   //
   useEffect(() => {
-    if (inputNumber && !hasError) {
-      isDone(true)
-    } else {
-      isDone(false)
-    }
-  }, [inputNumber, hasError])
+    isDone(!!(!hasError && inputNumber), name)
+  }, [inputNumber])
 
   return (
     <label
       className={`${style.input__text} ${
         hasError ? style["input__text--error"] : ""
       }`}
+      data-testid="input_number"
     >
       {name}
       <input type="text" onChange={filterInput} value={inputNumber} />
-      <span>{errorInputName} deve ser um número</span>
+      <span>{firstName} deve ser um número</span>
     </label>
   )
 }
@@ -61,7 +66,7 @@ InputNumber.propTypes = {
   /**
    * Qual máscara deverá ser aplicada no input
    */
-  format: propTypes.oneOf(["real", "porcentagem", ""]),
+  format: propTypes.oneOf(["real", "percentage", ""]),
   /**
    * Quando este valor for alterado deverá acionar um efeito colateral que limpará todos os inputs
    */
@@ -71,10 +76,10 @@ InputNumber.propTypes = {
    */
   autoComplete: propTypes.string,
   /**
-   *Retorna uma resposta para o Componente pai, se o input foi concluido ou não,
-   ou seja se ele foi preenchido e não há nenhum erro
+   * Em seu primeiro argumento recebe o um valor boleano se o input está preenchido corretamente
+   * e em seu segundo argumento recebe o nome do input
    */
-  isDone: propTypes.func.isRequired,
+  isDone: propTypes.func,
 }
 
 export default InputNumber

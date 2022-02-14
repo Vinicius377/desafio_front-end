@@ -1,37 +1,47 @@
 export default {
   // Real
   real: value => {
-    const valueInArray = value.split("")
-
-    const lastDigits = value.split("").splice(-3)
-
-    const firstDigits = value
+    const valueFilterNumber = value
       .split("")
-      .splice(0, value.length - 3)
       .filter(digit => "0123456789".includes(digit))
-      .reduce((acc, digit) => {
+
+    let initialNumbers = [...valueFilterNumber]
+      .slice(0, valueFilterNumber.length - 2)
+      .reverse()
+      .reduce((acc, value) => {
         if (acc.length % 4 === 0) {
-          return `${acc} ${digit}`
+          return `${acc} ${value}`
         }
-
-        return acc + digit
+        return `${acc}${value}`
       }, "")
+      .split("")
+      .reverse()
+      .join("")
+      .trim()
 
-    let mask = ""
-    if (valueInArray.length > 2) {
-      mask = `${firstDigits}${lastDigits[0]},${lastDigits[1]}${lastDigits[2]}`
-    } else {
-      mask = value
+    const laterNumbers = [...valueFilterNumber].slice(-2).join("")
+    if (valueFilterNumber.length === 1) {
+      return `R$ 0,0${valueFilterNumber.join("")}`
     }
-
-    return `R$${mask}`
+    if (valueFilterNumber.length === 4 && initialNumbers === "00") {
+      return `R$ 0,${laterNumbers}`
+    }
+    if (valueFilterNumber.length > 2) {
+      if (initialNumbers.startsWith("0")) {
+        initialNumbers = initialNumbers.split("").splice(1)
+      }
+      return `R$ ${initialNumbers},${laterNumbers}`
+    }
   },
   // Porcentagem
-  porcentagem: value => {
-    const mask = value.split("").filter(digit => "0123456789".includes(digit))
+  percentage: value => {
+    let mask = value.split("").filter(digit => "0123456789".includes(digit))
 
     if (!value.split("").includes("%")) {
-      mask.splice(mask.length - 1, 1)
+      if (value.length > 1) {
+        mask.splice(-1)
+        return `${mask.join("")}%`
+      }
     }
 
     return `${mask.join("")}%`

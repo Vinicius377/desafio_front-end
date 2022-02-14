@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useEffect } from "react"
 import style from "./style.module.css"
 import propTypes from "prop-types"
 
-function InputRadio({ buttons, name, onSetValue }) {
+function InputRadio({ buttons = ["buttonUndef"], name, onSetValue }) {
   const setRadioValue = ({ target }) => {
     const valueWithoutAccent = target.value
       .replace(/[ÀÁÂÃÄÅ]/g, "A")
@@ -15,17 +15,25 @@ function InputRadio({ buttons, name, onSetValue }) {
     }
     onSetValue(valueWithoutAccent)
   }
+  useEffect(() => {
+    setRadioValue({ target: { value: buttons[buttons.length - 1] } })
+  }, [])
   return (
-    <fieldset className={style.input__radio} onChange={setRadioValue}>
+    <fieldset
+      className={style.input__radio}
+      onChange={setRadioValue}
+      data-testid="input_radio"
+    >
       {buttons.map((input, index) => (
-        <>
-          <label key={index}>
-            <input type="radio" name={name} value={input} />
-            <span>
-              <span>{input}</span>
-            </span>
-          </label>
-        </>
+        <label key={index}>
+          <input
+            type="radio"
+            name={name}
+            value={input}
+            defaultChecked={index === buttons.length - 1}
+          />
+          <span>{input}</span>
+        </label>
       ))}
     </fieldset>
   )
