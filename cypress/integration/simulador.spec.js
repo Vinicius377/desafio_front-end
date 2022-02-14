@@ -1,13 +1,7 @@
 /// <reference types="cypress"/>
 
-//Os inputs de ** e ** são automaticamente preenchidos
-//Todos os outros inputs devem ser vazios
-//O input radio deve ter um item selecionado por padrao
-//Se os Inputs forem preenchidos e não tiver nenhum erro
-//Se
-
 beforeEach(() => {
-  cy.visit("http://localhost:3006")
+  cy.visit("http://localhost:3001")
 })
 
 //Result
@@ -35,5 +29,15 @@ it("Limpar os inputs text ao clicar em Limpar Campos", () => {
         .then(() => {
           cy.get("[data-testid='input_number'] ").should("have.value", "")
         })
+    })
+})
+
+it("Se todos os dados estiverem corretos o botao Simular deve ser habilitado", () => {
+  cy.get("[data-testid='input_number'] ")
+    .each($el => {
+      cy.wrap($el).type("123")
+    })
+    .then(() => {
+      cy.get("[data-testid='button_simular']").should("not.be.disabled")
     })
 })
