@@ -6,7 +6,7 @@ Trata-se de um desafio proposto pela empresa EQI-Investimentos para a criação 
 
 ## Tecnologias utilizados
 
-- **React**: Pela componentização de elementos e organização do código
+- **ReactJS**: Pela componentização de elementos e organização do código
 - **ChartJS**: Para apresentar um gráfico com os dados
 - **Axios**: Para as requisições HTTP
 - **Storybook**: Para documentar a aplicação
@@ -46,9 +46,9 @@ A aplicação pode ser acessada em http://localhost:3001/
 ```bash
 npm test
   # Executa os testes unitários
-npm storybook
+npm run storybook
   # Executa a documentação do projeto na url http://localhost:6006/
-npm cypress
+npm run cypress
   # Executa os testes E2E
   # Atenção: a aplicação já deve estar sendo executada
 npm build
