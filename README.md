@@ -23,7 +23,7 @@ Os inputs só podem receber numeros
 Se todos os inputs estiverem preencidos corretamente o botão de Simular será habilitado
 
 ![input result](./public/screenshots/result.png)
-Esssa é a tela de resultados se tudo ocorrer corretamente
+Esta é a tela de resultados se tudo ocorrer corretamente
 
 ## Requisitos minimos
 
